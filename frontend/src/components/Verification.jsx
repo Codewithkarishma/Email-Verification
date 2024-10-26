@@ -10,7 +10,7 @@ function Verification() {
   useEffect(() =>{
     const verifyEmail = async() =>{
       try {
-        const response = await axios.get(`https://email-verification-pbsa.onrender.com/verify/${token}`);
+        const response = await axios.get(`http://localhost:5000/verify/${token}`);
 
         // only allow the toast message once
         if(response.data.token){
