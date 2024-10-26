@@ -83,7 +83,7 @@ app.get('/verify/:token', async (req, res) => {
     try {
         const { token } = req.params;
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
-        
+         console.log('Decoded email from token:', email);
         const user = await User.findOne({ email });
         if (!user) return res.status(400).send('User not found.');
 
