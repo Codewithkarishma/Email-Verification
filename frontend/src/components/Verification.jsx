@@ -9,6 +9,7 @@ function Verification() {
 
   useEffect(() =>{
     const verifyEmail = async() =>{
+        console.log('Attempting to verify with token:', token);
       try {
         const response = await axios.get(`https://email-verification-backend.onrender.com/verify/${token}`);
 
