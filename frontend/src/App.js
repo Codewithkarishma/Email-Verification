@@ -18,7 +18,7 @@ function App() {
     <Route path="/" element={<MainPage />} />
     <Route path="/register"  element={ <Register /> }  />
     <Route path="/login"  element={ <Login /> }  />
-    <Route path="/verify"  element={ <Verification /> }  />
+    <Route path="/verify/:token"  element={ <Verification /> }  />
     <Route path="/home"  element={ <Home /> }  />
   </Routes>
 </div>
