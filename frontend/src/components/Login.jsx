@@ -13,7 +13,7 @@ function Register() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://email-verification-backend.onrender.com/login', {email, password});
+      const response = await axios.post('http://localhost:5000/login', {email, password});
       toast.success(response.data.message);
       setEmail('');
       setPassword('');
@@ -36,7 +36,7 @@ function Register() {
         <input type='password' placeholder='password' value={password} onChange={(e) =>setPassword(e.target.value)} required />
         <button type="submit" className='main-button'>Login</button>
       </form>
-      <p>Already have an Account <Link to="/register">Register here</Link></p>
+      <p>Already have an Account <Link to="/login">Register here</Link></p>
     </div>
   )
 }
