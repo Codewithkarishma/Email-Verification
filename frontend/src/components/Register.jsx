@@ -13,7 +13,7 @@ function Register() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/register', {email, password});
+      const response = await axios.post('https://email-verification-backend.onrender.com/register', {email, password});
       toast.success(response.data.message);
       setEmail('');
       setPassword('');
