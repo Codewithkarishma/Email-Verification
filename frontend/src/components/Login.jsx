@@ -36,7 +36,7 @@ function Register() {
         <input type='password' placeholder='password' value={password} onChange={(e) =>setPassword(e.target.value)} required />
         <button type="submit" className='main-button'>Login</button>
       </form>
-      <p>Already have an Account <Link to="/login">Register here</Link></p>
+      <p>Already have an Account <Link to="/register">Register here</Link></p>
     </div>
   )
 }
