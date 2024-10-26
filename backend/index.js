@@ -8,13 +8,7 @@ const { body, validationResult } = require('express-validator');
 require('dotenv').config();
 
 const app = express();
-
-// CORS configuration
-const allowedOrigins = ['https://email-verification-krmc.onrender.com']; // Replace with your frontend URL
-app.use(cors({
-    origin: allowedOrigins,
-}));
-
+app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
@@ -35,7 +29,7 @@ const userSchema = new mongoose.Schema({
     isVerified: { type: Boolean, default: false },
 });
 
-const User = mongoose.model('User ', userSchema);
+const User = mongoose.model('User', userSchema);
 
 // Email Transporter
 const transporter = nodemailer.createTransport({
@@ -59,13 +53,13 @@ app.post('/register', [
     const { email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     
-    const newUser  = new User({ email, password: hashedPassword });
+    const newUser = new User({ email, password: hashedPassword });
     try {
-        await newUser .save();
+        await newUser.save();
         
         // Generate a verification token
         const verificationToken = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        const verificationLink = `https://email-verification-krmc.onrender.com/verify/${verificationToken}`; // Change to your frontend URL
+        const verificationLink = `http://localhost:3000/verify/${verificationToken}`; // Change to your frontend URL
 
         // Send the verification email
         await transporter.sendMail({
@@ -74,10 +68,10 @@ app.post('/register', [
             text: `Click the link to verify your email: ${verificationLink}`,
         });
 
-        res.status(201).json({ message: 'User  registered. Check your email for verification.' });
+        res.status(201).json({ message: 'User registered. Check your email for verification.' });
     } catch (error) {
         if (error.code === 11000) {
-            return res.status(400).json({ message: 'User  already registered with this email.' });
+            return res.status(400).json({ message: 'User already registered with this email.' });
         }
         console.error('Error during user registration:', error);
         res.status(500).json({ message: 'Internal server error.' });
@@ -91,11 +85,11 @@ app.get('/verify/:token', async (req, res) => {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
         
         const user = await User.findOne({ email });
-        if (!user) return res.status(400).send('User  not found.');
+        if (!user) return res.status(400).send('User not found.');
 
         if (user.isVerified) {
             const authToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-            return res.status(200).json({ message: 'User  already verified.', token: authToken });
+            return res.status(200).json({ message: 'User already verified.', token: authToken });
         }
 
         user.isVerified = true; // Set the user as verified
@@ -115,7 +109,7 @@ app.post('/login', async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-        return res.status(400).json({ message: 'User  not found.' });
+        return res.status(400).json({ message: 'User not found.' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -127,7 +121,7 @@ app.post('/login', async (req, res) => {
         return res.status(400).json({ message: 'Email not verified. Please check your email.' });
     }
 
-    const authToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn : '1h' });
+    const authToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ message: 'Login successful!', token: authToken }); // Send token in the response
 });
 
