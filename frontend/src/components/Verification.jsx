@@ -10,12 +10,12 @@ function Verification() {
   useEffect(() =>{
     const verifyEmail = async() =>{
       try {
-        const response = await axios.get(`http://localhost:5000/verify/${token}`);
+        const response = await axios.get(`https://email-verification-backend.onrender.com/verify/${token}`);
 
         // only allow the toast message once
         if(response.data.token){
           localStorage.setItem('token', response.data.token);
-          toast.success("Email Verified SuccessFullt & You are Logged in")
+          toast.success("Email Verified SuccessFully & You are Logged in")
           navigate('/home');
         }
         
