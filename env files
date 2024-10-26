@@ -1,5 +1,0 @@
-MONGO_DB= "mongodb url"
-PORT = 5000
-EMAIL_USER = "email from which you want to send mails"
-EMAIL_PASS = "PAsswod of the email that you are using"
-JWT_SECRET = "SECRET key that we will generate"
