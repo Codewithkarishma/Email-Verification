@@ -1,0 +1,9 @@
+/* src/index.css */
+.Toastify__toast--success {
+    background-color: #4CAF50; /* Green */
+  }
+  
+  .Toastify__toast--error {
+    background-color: #F44336; /* Red */
+  }
+  
