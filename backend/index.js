@@ -59,7 +59,7 @@ app.post('/register', [
         
         // Generate a verification token
         const verificationToken = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        const verificationLink = `https://email-verification-krmc.onrender.com/verify/${verificationToken}`; // Change to your frontend URL
+        const verificationLink = `http://localhost:3000/verify/${verificationToken}`; // Change to your frontend URL
 
         // Send the verification email
         await transporter.sendMail({
