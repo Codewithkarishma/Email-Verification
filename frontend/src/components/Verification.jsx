@@ -11,7 +11,7 @@ function Verification() {
     const verifyEmail = async () => {
         console.log('Attempting to verify with token:', token);
         try {
-            const response = await axios.get(`https://email-verification-backend.onrender.com/verify/${token}`);
+            const response = await axios.get(`http://localhost:5000/verify/${token}`);
             console.log('Verification response:', response.data);
 
             if (response.data.token) {
